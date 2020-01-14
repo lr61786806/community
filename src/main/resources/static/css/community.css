@@ -1,0 +1,25 @@
+.main{
+    margin: 30px;
+    background-color: white;
+}
+body{
+    background-color: #efefef;
+}
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}
+.main1{
+    background-color: white;
+}
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.pages{
+    float: right;
+}
+.profile.section{
+    margin-top: 15px;
+}

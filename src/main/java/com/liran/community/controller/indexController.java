@@ -1,31 +1,27 @@
 package com.liran.community.controller;
-
-import com.liran.community.Mapper.UserMapper;
-import com.liran.community.model.User;
+import com.liran.community.dto.PaginationDTO;
+import com.liran.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class indexController {
     @Autowired
-    private UserMapper userMapper;
+    private QuestionService QuestionService;
+
     @GetMapping("/")
-    public String index(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                User user = userMapper.findByToken(token);
-                if(user!=null){
-                    request.getSession().setAttribute("user",user);
-                }
-                break;
-            }
-        }
+    public String index(HttpServletRequest request,
+                        Model model,
+                        @RequestParam(name = "page",defaultValue = "1")Integer page,
+                        @RequestParam(name = "size",defaultValue = "2")Integer size){
+
+        PaginationDTO pagination= QuestionService.list(page,size);
+        model.addAttribute("pagination",pagination);
         return "index";
     }
 }
